@@ -1,1 +1,1 @@
-console.log('i am async1');
+console.log('i am async');

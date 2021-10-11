@@ -1,16 +1,42 @@
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
+
 module.exports = {
-  entry: './src/index.js',
-  output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+  devServer: {
+    port: 8080,
+    host: '127.0.0.1',
+    // static: './dist'
   },
+  entry: {
+    index: './src/index.js',
+    print: './src/print.js',
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: '管理输出',
+    }),
+  ],
+  output: {
+    filename: '[name].bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+    clean: true,
+  },
+  resolve: {
+    alias: {
+        '@': path.resolve(__dirname, './', 'src'),
+    },
+  },
+  devtool: 'eval-source-map',
   module: {
     rules: [
       {
         test: /\.css$/i,
         use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: 'asset/resource',
       },
     ],
   },

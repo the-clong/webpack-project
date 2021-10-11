@@ -1,3 +1,4 @@
 .hello {
     color: red;
-  }
+    background: url('@/images/jtfw-c-connect-phone.png') no-repeat;
+}
