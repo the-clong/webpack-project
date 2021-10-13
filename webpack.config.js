@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const WebpackBar = require('webpackbar'); // build进度条
 const path = require('path');
 
 
@@ -6,19 +7,28 @@ module.exports = {
   devServer: {
     port: 8080,
     host: '127.0.0.1',
-    // static: './dist'
+    compress: true,
+    static: './dist'
   },
   entry: {
-    index: './src/index.js',
-    print: './src/print.js',
+    index: {
+      import: './src/index.js',
+      // dependOn: 'shared',
+    },
+    print: {
+      import: './src/print.js',
+      // dependOn: 'shared',
+    },
+    // shared: 'lodash'
   },
   plugins: [
     new HtmlWebpackPlugin({
       title: '管理输出',
     }),
+    new WebpackBar()
   ],
   output: {
-    filename: '[name].bundle.js',
+    filename: 'js/[name].[contenthash].js',
     path: path.resolve(__dirname, 'dist'),
     clean: true,
   },
@@ -27,7 +37,7 @@ module.exports = {
         '@': path.resolve(__dirname, './', 'src'),
     },
   },
-  devtool: 'eval-source-map',
+  // devtool: 'eval-source-map',
   module: {
     rules: [
       {
@@ -41,6 +51,16 @@ module.exports = {
     ],
   },
   optimization: {
+    runtimeChunk: 'single',
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all',
+        },
+      },
+    },
     chunkIds: process.env.NODE_ENV === 'development' ? "named" : "deterministic"
   },
   cache: {

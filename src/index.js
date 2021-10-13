@@ -17,7 +17,7 @@ function component() {
     const newImage = new Image();
     newImage.src = Icon;
     element.appendChild(newImage);
-    btn.innerHTML = 'test btn';
+    btn.innerHTML = 'test btn1';
     btn.onclick = printMe;
     element.appendChild(btn);
   
