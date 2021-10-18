@@ -1,0 +1,27 @@
+{
+  "name": "create-lbg",
+  "version": "1.0.0",
+  "description": "前端脚手架模板",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "bin": {
+    "create-lbg": "index.js"
+  },
+  "files": [
+    "index.js",
+    "template-*"
+  ],
+  "keywords": [
+    "cli"
+  ],
+  "author": "chenglong08",
+  "license": "ISC",
+  "dependencies": {
+    "inquirer": "^8.2.0",
+    "kolorist": "^1.5.0",
+    "minimist": "^1.2.5",
+    "ora": "^3.4.0"
+  }
+}

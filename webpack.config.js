@@ -68,7 +68,7 @@ module.exports = {
     type: "filesystem",
     buildDependencies: {
       // 2. 将你的 config 添加为 buildDependency，以便在改变 config 时获得缓存无效
-      // config: [__filename],
+      // config: [path.join(__dirname, 'webpack.dll_config.js')],
     },
   }
 };
