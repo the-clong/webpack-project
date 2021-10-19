@@ -18,11 +18,13 @@ const {
     magenta,
     lightRed,
     red,
+    lightBlue
 } = require("kolorist");
 
-const targetDir = argv._[0];
+let targetDir = argv._[0];
 const templateArg = argv.tpl || argv.t;
 const defaultProjectName = targetDir || 'lbg-fe-project';
+console.log('dir------', defaultProjectName);
 // 模板配置
 const FRAMEWORKS = [
     {
@@ -42,27 +44,47 @@ try {
             type: "input",
             name: "projectName",
             message: "项目名称",
-            default: defaultProjectName,
+            default: (answers) => {
+                targetDir = answers.projectName || defaultProjectName;
+                return targetDir;
+            },
         },
         {
             type: 'confirm',
             name: 'overwrite',
-            when: fs.existsSync(targetDir) || !isEmpty(targetDir),
-            message: targetDir !== '.' ? `使用${targetDir}作为项目路径，将替换目录下所有文件，是否继续？` : '当前文件夹创建？'
+            when: () => {
+               return fs.existsSync(targetDir);
+            },
+            message: (answers) => {
+                const { projectName } = answers;
+
+                return projectName !== '.' ? `使用${projectName}作为项目路径，将替换目录下所有文件，是否继续？` : '当前文件夹创建？'
+            },
         },
         {
             name: "template",
             type: "list",
-            when: templateArg && frameWorkArr.includes(templateArg),
-            message: "选择模板",
-            choices: [
-                {
-                    value: green('pc')
-                },
-                {
-                    value: yellow('h5')
+            when: (answers) => {
+                if(answers.hasOwnProperty('overwrite')) {
+                    if(!answers.overwrite) {
+                        console.log(red('✖') + ' Operation cancelled');
+                        process.exit();
+                    }
                 }
-            ],
+                // 没有tpl参数让用户选择，如果有但是用户选的不对，也需要让他自己选
+                if(!templateArg) {
+                    return true;
+                } else {
+                    console.log(blue('info') + ' 当前模板不存在，请重新选择');
+                    return !frameWorkArr.includes(templateArg);
+                }         
+            },
+            message: "选择模板",
+            choices: FRAMEWORKS.map((item) => {
+                return {
+                    value: item.color(item.value)
+                };
+            }),
         },
         {
             name: "entryType",
@@ -82,18 +104,31 @@ try {
     inquirer.prompt(TEMPLATES).then((answers) => {
         const { projectName, template, entryType, overwrite } = answers;
         const templateArr = FRAMEWORKS.filter((item) => template.indexOf(item.value) > -1);
-        let templateURL = '';
+        let templateDir = '';
         if(templateArr.length > 0) {
-            templateURL = path.join(__dirname, `template-${templateArr[0].value}`)
+            templateDir = path.join(__dirname, `template-${templateArr[0].value}`)
         }
-        // switch(entryType.replace(/[\u0000-\u0019]/g, '')) {
-        //     case "✔ 单页":
-        //     case "✔ 多页": 
-        // }
-        // const spinner = ora('Downloading template... \n');
-        // spinner.start();
-        // console.log(Printer.default.fromString(input));
-
+        switch(entryType.replace(/[\u0000-\u0019]/g, '')) {
+            case "✔ 单页":
+                throw new Error('fdsfds');
+            case "✔ 多页": 
+        }
+        const spinner = ora({spinner: {
+            interval: 80, // Optional
+            frames: ["🕛 ",
+			"🕐 ",
+			"🕑 ",
+			"🕒 ",
+			"🕓 ",
+			"🕔 ",
+			"🕕 ",
+			"🕖 ",
+			"🕗 ",
+			"🕘 ",
+			"🕙 ",
+			"🕚 "],
+        },text: lightBlue('下载中模板中')});
+        spinner.start();
         // 用户选择覆盖将文件夹清空，没有覆盖创建新文件夹准备写入文件
         const root = path.join(cwd, projectName); // 取当前文件夹拼接
         if (overwrite) {
@@ -102,7 +137,7 @@ try {
             fs.mkdirSync(root);
         }
         // 写模板文件
-        const files = templateURL ? fs.readdirSync(templateURL) : [];
+        const files = templateDir ? fs.readdirSync(templateDir) : [];
         const writeByContent = (root, file, content) => {
             const targetPath = path.join(root, file);
             // 有content代表写入内容
@@ -110,29 +145,33 @@ try {
                 fs.writeFileSync(targetPath, content);
             } else {
             // 没有直接copyfile
-                copyFile(templateURL, targetPath);
+                copyFile(path.join(templateDir, file), targetPath);
             }
         };
         if(files.length > 0) {
             for (const file of files.filter((f) => f !== 'package.json')) {
                 writeByContent(root, file);
             }
+            spinner.succeed('Done，运行以下命令开发!');
+            if (root !== cwd) {
+                console.log(`\n cd ${path.relative(cwd, root)} \n`);
+            }
         }
-        // spinner.stop();
-        // 写package.json文件
-        // 写webpack.config.js，区分单页和多页
     }).catch((err) => {
+        console.log('err-----', err);
         if (err.isTtyError) {
             // Prompt couldn't be rendered in the current environment
         } else {
-        // Something else went wrong
+            // Something else went wrong
         }
     });
 
 } catch (cancelled) {
-    console.log(cancelled.message)
+    console.log(cancelled.message);
     return
 }
+
+
 
 function copyDir(srcDir, destDir) {
     fs.mkdirSync(destDir, { recursive: true });
@@ -144,10 +183,8 @@ function copyDir(srcDir, destDir) {
 }
 
 function copyFile(src, dest) {
-    console.log('src, dest-----', src, dest);
     // 如果文件信息存在
    const stat = fs.statSync(src);
-   console.log('isDirect-----',stat.isDirectory());
    if(stat.isDirectory()) {
       copyDir(src, dest);
    } else {
@@ -160,8 +197,12 @@ function isEmpty(curPath) {
     if(!curPath) {
         return true;
     }
-    // 获取是否有子目录
-    return fs.readdirSync(curPath).length === 0
+    if(fs.existsSync(targetDir)) {
+        // 获取是否有子目录
+        return fs.readdirSync(curPath).length === 0;
+    } else {
+        return false;
+    }
 }
 
 
