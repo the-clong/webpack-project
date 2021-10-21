@@ -1,0 +1,7 @@
+39 error Error: Command failed with exit code 128: git tag create-lbg@1.0.2 -m create-lbg@1.0.2
+39 error fatal: tag 'create-lbg@1.0.2' already exists
+39 error     at makeError (/Users/chenglong/project/myproject/webpack-project/node_modules/execa/lib/error.js:60:11)
+39 error     at handlePromise (/Users/chenglong/project/myproject/webpack-project/node_modules/execa/index.js:118:26)
+39 error     at processTicksAndRejections (internal/process/task_queues.js:97:5)
+39 error     at async Promise.all (index 0)
+39 error     at async Promise.all (index 0)
