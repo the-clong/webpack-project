@@ -1,7 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackBar = require('webpackbar'); // build进度条
 const path = require('path');
-
+console.log(process.env);
 
 module.exports = {
   devServer: {

@@ -1,0 +1,7 @@
+{
+  "packages": [
+    "packages/*",
+    "packages/create-lbg/template-*"
+  ],
+  "version": "independent"
+}

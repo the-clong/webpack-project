@@ -24,7 +24,10 @@ const {
 let targetDir = argv._[0];
 const templateArg = argv.tpl || argv.t;
 const defaultProjectName = targetDir || 'lbg-fe-project';
-console.log('dir------', defaultProjectName);
+process.on('SIGINT', function() {
+    console.log(red('✖') + ' Operation cancelled');
+    process.exit();
+});
 // 模板配置
 const FRAMEWORKS = [
     {
@@ -154,7 +157,19 @@ try {
             }
             spinner.succeed('Done，运行以下命令开发!');
             if (root !== cwd) {
-                console.log(`\n cd ${path.relative(cwd, root)} \n`);
+                console.log(`\n cd ${path.relative(cwd, root)}`);
+            }
+            const pkgInfo = pkgFromUserAgent(process.env.npm_config_user_agent);
+            const pkgName = (pkgInfo && pkgInfo.name) || 'npm';
+            switch(pkgName) {
+                case 'yarn':
+                    console.log(` ${pkgName} `);
+                    console.log(` ${pkgName} start `);
+                    break;
+                default:
+                    console.log(` ${pkgName} install `);
+                    console.log(` ${pkgName} run dev `);
+                    break;
             }
         }
     }).catch((err) => {
@@ -167,11 +182,20 @@ try {
     });
 
 } catch (cancelled) {
+    console.log('cancelled-----', cancelled);
     console.log(cancelled.message);
-    return
+    return;
 }
 
-
+function pkgFromUserAgent(userAgent) {
+    if (!userAgent) return undefined;
+    const pkgSpec = userAgent.split(' ')[0]
+    const pkgSpecArr = pkgSpec.split('/')
+    return {
+      name: pkgSpecArr[0],
+      version: pkgSpecArr[1]
+    };
+  }
 
 function copyDir(srcDir, destDir) {
     fs.mkdirSync(destDir, { recursive: true });
