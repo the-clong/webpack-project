@@ -1,6 +1,6 @@
 {
   "name": "create-lbg",
-  "version": "1.0.2",
+  "version": "1.0.0",
   "description": "前端脚手架模板",
   "main": "index.js",
   "scripts": {
