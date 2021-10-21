@@ -1,7 +1,4 @@
-39 error Error: Command failed with exit code 128: git tag create-lbg@1.0.2 -m create-lbg@1.0.2
-39 error fatal: tag 'create-lbg@1.0.2' already exists
-39 error     at makeError (/Users/chenglong/project/myproject/webpack-project/node_modules/execa/lib/error.js:60:11)
-39 error     at handlePromise (/Users/chenglong/project/myproject/webpack-project/node_modules/execa/index.js:118:26)
-39 error     at processTicksAndRejections (internal/process/task_queues.js:97:5)
-39 error     at async Promise.all (index 0)
-39 error     at async Promise.all (index 0)
+47 error Error: Command failed with exit code 128: git push --follow-tags --no-verify --atomic origin develop
+47 error fatal: unable to access 'https://github.com/the-clong/webpack-project.git/': LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to github.com:443
+47 error     at makeError (/Users/chenglong/project/myproject/webpack-project/node_modules/execa/lib/error.js:60:11)
+47 error     at handlePromise (/Users/chenglong/project/myproject/webpack-project/node_modules/execa/index.js:118:26)
