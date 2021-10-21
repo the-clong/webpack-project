@@ -1,18 +1,14 @@
 {
   "command": {
     "publish": {
-      "ignoreChanges": ["ignored-file", "*.md"],
+      "ignoreChanges": ["ignored-file", "*.md", "*.log"],
       "message": "chore(release): publish",
-      "registry": "http://registry.npmjs.com"
+      "registry": "https://registry.npmjs.com"
     }
   },
   "packages": [
     "packages/*",
     "packages/create-lbg/template-*"
   ],
-  "scripts": {
-    "bootstrap": "lerna bootstrap --ignore-scripts",
-    "build": "lerna run --parallel build"
-  },
   "version": "independent"
 }

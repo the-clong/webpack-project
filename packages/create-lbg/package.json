@@ -24,5 +24,6 @@
     "lodash": "^4.17.21",
     "minimist": "^1.2.5",
     "ora": "^3.4.0"
-  }
+  },
+  "gitHead": "ecf99cd9939df7753ddd838bc0c96689e97b372c"
 }
