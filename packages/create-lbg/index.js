@@ -15,6 +15,8 @@ const {
     green,
     cyan,
     blue,
+    magenta,
+    lightRed,
     red,
     lightBlue
 } = require("kolorist");
