@@ -3,7 +3,7 @@
     "publish": {
       "ignoreChanges": ["ignored-file", "*.md"],
       "message": "chore(release): publish",
-      "registry": "https://registry.npmjs.com"
+      "registry": "http://registry.npmjs.com"
     }
   },
   "packages": [
