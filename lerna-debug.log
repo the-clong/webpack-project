@@ -1,8 +1,0 @@
-61 warn complete Waiting for 2 child processes to exit. CTRL-C to exit immediately.
-62 error Error: Command failed with exit code 128: git tag plugin@1.0.1 -m plugin@1.0.1
-62 error fatal: tag 'plugin@1.0.1' already exists
-62 error     at makeError (/Users/chenglong/project/myproject/webpack-project/node_modules/execa/lib/error.js:60:11)
-62 error     at handlePromise (/Users/chenglong/project/myproject/webpack-project/node_modules/execa/index.js:118:26)
-62 error     at processTicksAndRejections (internal/process/task_queues.js:97:5)
-62 error     at async Promise.all (index 1)
-62 error     at async Promise.all (index 0)
