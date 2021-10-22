@@ -22,5 +22,6 @@
   "dependencies": {
     "lodash": "^4.17.21",
     "react-router": "^5.2.1"
-  }
+  },
+  "gitHead": "05c21fe933ba497ce81935a726778f8435b6c711"
 }
