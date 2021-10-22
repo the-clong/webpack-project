@@ -1,6 +1,6 @@
 {
   "name": "create-lbgcli",
-  "version": "1.0.20",
+  "version": "1.0.1",
   "description": "前端脚手架模板",
   "main": "index.js",
   "scripts": {
@@ -14,7 +14,8 @@
     "template-*"
   ],
   "keywords": [
-    "lbg","cli"
+    "lbg",
+    "cli"
   ],
   "author": "chenglong08",
   "license": "ISC",
