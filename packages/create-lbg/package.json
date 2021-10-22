@@ -1,5 +1,5 @@
 {
-  "name": "create-lbgcli",
+  "name": "create-lbgcli1",
   "version": "1.0.2",
   "description": "前端脚手架模板",
   "main": "index.js",
@@ -26,5 +26,5 @@
     "minimist": "^1.2.5",
     "ora": "^3.4.0"
   },
-  "gitHead": "05c21fe933ba497ce81935a726778f8435b6c711"
+  "gitHead": "c8497d289a6eb19eebf98604bff88e701fd233eb"
 }
