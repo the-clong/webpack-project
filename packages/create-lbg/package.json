@@ -1,6 +1,6 @@
 {
   "name": "create-lbgcli",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "前端脚手架模板",
   "main": "index.js",
   "scripts": {
