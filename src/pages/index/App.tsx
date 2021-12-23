@@ -10,7 +10,6 @@ function App() {
             <button type="button" onClick={() => setCount(count + 1)}>
                 1
             </button>
-
         </div>
     );
 }
