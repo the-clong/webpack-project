@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "experimentalDecorators": true, // 装饰器语法
+        "rootDir": "src", // 指定输入文件目录（用于输出）
+        "outDir": "dist", // 指定输出目录
+        "sourceMap": true, // 生成目标文件的 sourceMap
+        "noImplicitAny": false, // 不允许隐式的 any 类型
+        "module": "commonjs", // 生成代码的模块标准
+        "target": "es5", // 目标语言的版本
+        "jsx": "react", // react 支持jsx
+        "lib": ["es6","dom"],  // TS 需要引用的库，即声明文件，es5 默认 "dom", "es5", "scripthost"
+        "allowSyntheticDefaultImports":true, // 导入的模块兼容
+        "paths": {
+            "@/*": ["./src/*"]
+        }
+    },
+    "include": [
+        "./src/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+    ]
+}
